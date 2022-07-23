@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,9 +15,7 @@ class MyApp extends StatelessWidget {
               elevation: 0, backgroundColor: Colors.white, iconTheme: IconThemeData(color: Colors.black))),
       title: 'Material App',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
+        appBar: AppBar(),
         body: Center(
           child: Container(
             child: Text('Hello World'),
