@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,6 +5,31 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: AppBarBackgroundColor().color,
+      appBar: AppBar(
+        title: Text(
+          AppBarTitleText().text,
+          style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black),
+        ),
+        centerTitle: false,
+        actions: actionIcon(),
+      ),
+    );
   }
+
+  List<Widget> actionIcon() {
+    return [
+      IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+      IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+    ];
+  }
+}
+
+class AppBarTitleText {
+  final String text = 'Bugün neler yapacaksın';
+}
+
+class AppBarBackgroundColor {
+  final Color color = Colors.white;
 }
