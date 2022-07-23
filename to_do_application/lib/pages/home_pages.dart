@@ -13,16 +13,28 @@ class HomePage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black),
         ),
         centerTitle: false,
-        actions: actionIcon(),
+        actions: actionIcon(context),
       ),
     );
   }
 
-  List<Widget> actionIcon() {
+  List<Widget> actionIcon(BuildContext context) {
     return [
       IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+      IconButton(
+          onPressed: () {
+            _showAddTaskBottomSheet(context);
+          },
+          icon: const Icon(Icons.add)),
     ];
+  }
+
+  void _showAddTaskBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Center();
+        });
   }
 }
 
