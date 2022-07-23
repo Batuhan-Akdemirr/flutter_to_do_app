@@ -33,7 +33,20 @@ class HomePage extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Center();
+          return Container(
+
+            // Textfield klavyeyle beraber yukarı çıkıyor.
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            width: MediaQuery.of(context).size.width,
+            child: ListTile(
+              title: TextField(
+                style: Theme.of(context).textTheme.headline6 ,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: HintText().text),
+              ),
+            ),
+          );
         });
   }
 }
@@ -44,4 +57,8 @@ class AppBarTitleText {
 
 class AppBarBackgroundColor {
   final Color color = Colors.white;
+}
+
+class HintText {
+  final String text = 'Görev nedir ?';
 }
