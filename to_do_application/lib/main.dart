@@ -9,6 +9,18 @@ import 'package:to_do_application/pages/home_pages.dart';
 
 final locator = GetIt.instance;
 
+Future<void> setupHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskAdapter());
+
+  var taskBox = await Hive.openBox<Task>('tasks');
+  for (var element in taskBox.values) {
+    if (element.createdAt.day != DateTime.now().day) {
+      taskBox.delete(element.id);
+    }
+  }
+}
+
 void setup() {
   locator.registerSingleton<LocalStorage>(HiveLocalStorage());
 }
@@ -18,8 +30,7 @@ Future<void> main() async {
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-  await Hive.initFlutter();
-  Hive.registerAdapter(TaskAdapter());
+  await setupHive();
   setup();
   runApp(MyApp());
 }
