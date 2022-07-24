@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
   void _closeBottomSheetAndShowDatePicker(BuildContext context, String value) {
     DatePicker.showTimePicker(context, showSecondsColumn: false, onConfirm: (time) async {
       var newTaskToBeAdded = Task.create(name: value, createdAt: time);
-      _allTask.add(newTaskToBeAdded);
+      _allTask.insert(0, newTaskToBeAdded);
       await _localStorage.addTask(task: newTaskToBeAdded);
       setState(() {});
     });
