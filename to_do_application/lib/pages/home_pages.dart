@@ -3,6 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:to_do_application/data/local_storage.dart';
 import 'package:to_do_application/main.dart';
 import 'package:to_do_application/models/task_model.dart';
+import 'package:to_do_application/widgets/custom_search.dart';
 import 'package:to_do_application/widgets/task_list_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,9 +29,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppBarBackgroundColor().color,
       appBar: AppBar(
-        title: appBarTitle(context),
+        title: appBarTitle(),
         centerTitle: false,
-        actions: actionIcon(context),
+        actions: actionIcon(),
       ),
       body: _allTask.isNotEmpty
           ? ListView.builder(
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  GestureDetector appBarTitle(BuildContext context) {
+  GestureDetector appBarTitle() {
     return GestureDetector(
       onTap: () {
         _showAddTaskBottomSheet(context);
@@ -69,9 +70,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> actionIcon(BuildContext context) {
+  List<Widget> actionIcon() {
     return [
-      IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+      IconButton(
+          onPressed: () {
+            _showSearchPage();
+          },
+          icon: const Icon(Icons.search_outlined)),
       IconButton(
           onPressed: () {
             _showAddTaskBottomSheet(context);
@@ -131,6 +136,11 @@ class _HomePageState extends State<HomePage> {
   void _getAllTaskFromDb() async {
     _allTask = await _localStorage.getAllTask();
     setState(() {});
+  }
+
+  void _showSearchPage() async {
+    await showSearch(context: context, delegate: CustomSearchDelegate(allTask: _allTask));
+    _getAllTaskFromDb();
   }
 }
 
