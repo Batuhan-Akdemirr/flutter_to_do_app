@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:to_do_application/data/local_storage.dart';
+import 'package:to_do_application/helper/translatition_helper.dart';
 import 'package:to_do_application/main.dart';
 import 'package:to_do_application/models/task_model.dart';
 import 'package:to_do_application/widgets/custom_search.dart';
@@ -52,8 +54,8 @@ class _HomePageState extends State<HomePage> {
               },
               itemCount: _allTask.length,
             )
-          : const Center(
-              child: Text('Haydi Görev Ekle'),
+          :  Center(
+              child: const Text('empty_task_list').tr(),
             ),
     );
   }
@@ -64,9 +66,9 @@ class _HomePageState extends State<HomePage> {
         _showAddTaskBottomSheet(context);
       },
       child: Text(
-        AppBarTitleText().text,
+        'title',
         style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.black),
-      ),
+      ).tr(),
     );
   }
 
@@ -97,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               title: TextField(
                 autofocus: true,
                 style: Theme.of(context).textTheme.headline6,
-                decoration: InputDecoration(border: InputBorder.none, hintText: HintText().text),
+                decoration: InputDecoration(border: InputBorder.none, hintText:  'add_task'.tr()),
                 onSubmitted: (value) {
                   Navigator.of(context).pop();
                   if (value.length > 3) {
@@ -111,7 +113,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _closeBottomSheetAndShowDatePicker(BuildContext context, String value) {
-    DatePicker.showTimePicker(context, showSecondsColumn: false, onConfirm: (time) async {
+    DatePicker.showTimePicker(context, 
+    locale: TranslationHelper.getDeviceLanguage(context),
+    showSecondsColumn: false, onConfirm: (time) async {
       var newTaskToBeAdded = Task.create(name: value, createdAt: time);
       _allTask.insert(0, newTaskToBeAdded);
       await _localStorage.addTask(task: newTaskToBeAdded);
@@ -120,15 +124,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   _createDismissibleEffect() {
-    const String text = 'Bu görev silindi';
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Icon(Icons.delete_outline_outlined),
-        SizedBox(
+      children:  [
+        const Icon(Icons.delete_outline_outlined),
+        const SizedBox(
           width: 5,
         ),
-        Text(text)
+       const  Text('remove_task').tr()
       ],
     );
   }
@@ -144,14 +148,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class AppBarTitleText {
-  final String text = 'Bugün neler yapacaksın';
-}
 
 class AppBarBackgroundColor {
   final Color color = Colors.white;
 }
 
-class HintText {
-  final String text = 'Görev nedir ?';
-}

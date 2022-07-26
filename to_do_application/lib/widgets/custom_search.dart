@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_application/data/local_storage.dart';
 import 'package:to_do_application/main.dart';
@@ -56,8 +57,8 @@ class CustomSearchDelegate extends SearchDelegate {
             },
             itemCount: filteredList.length,
           )
-        : const Center(
-            child: Text('Eşleşme yok'),
+        :  Center(
+            child: const Text('search_not_found').tr(),
           );
   }
 
@@ -67,15 +68,15 @@ class CustomSearchDelegate extends SearchDelegate {
   }
 
   _createDismissibleEffect() {
-    const String text = 'Bu görev silindi';
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Icon(Icons.delete_outline_outlined),
-        SizedBox(
+      children:  [
+        const Icon(Icons.delete_outline_outlined),
+        const SizedBox(
           width: 5,
         ),
-        Text(text)
+        const Text('remove_task').tr(),
       ],
     );
   }
